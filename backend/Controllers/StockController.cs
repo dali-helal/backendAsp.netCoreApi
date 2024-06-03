@@ -1,4 +1,5 @@
 ﻿using backend.Dtos.Stock;
+using backend.Helpers;
 using backend.Interfaces;
 using backend.Mapper;
 using backend.Models;
@@ -18,12 +19,12 @@ namespace backend.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<StockDto>))]
-        public async Task<IActionResult> GetStocks()
+        public async Task<IActionResult> GetStocks([FromQuery] QueryObject queryObejct)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var stocks = await _stockRepository.GetAllStocks();
+            var stocks = await _stockRepository.GetAllStocks(queryObejct);
 
             if (stocks == null)
                 return NotFound();
