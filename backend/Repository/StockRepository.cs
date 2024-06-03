@@ -17,11 +17,11 @@ namespace backend.Repository
         }
         public async Task<List<Stock>> GetAllStocks()
         {
-            return await _dbContext.Stocks.ToListAsync();
+            return await _dbContext.Stocks.Include(c=>c.Comments).ToListAsync();
         }
         public async Task<Stock> GetStockById(int stockId)
         {
-            return await _dbContext.Stocks.Where(s => s.Id == stockId).FirstOrDefaultAsync();
+            return await _dbContext.Stocks.Include(c => c.Comments).FirstOrDefaultAsync(s=>s.Id== stockId);
         }
 
         public async Task<Stock> CreateAsync(Stock stockModel)

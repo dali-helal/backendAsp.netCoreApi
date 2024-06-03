@@ -17,5 +17,14 @@ namespace backend.Mapper
                StockId = comment.StockId,
             } ;
         }
+        public static Comment ToCommentFromCreateDTO(this CreateCommentDto modelDto,int stockId)
+        {
+            return new Comment
+            {
+                Title = modelDto.Title,
+                Content = modelDto.Content,
+                StockId=stockId,
+            };
+        }
     }
 }
