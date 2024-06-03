@@ -29,7 +29,7 @@ namespace backend.Controllers
             var commentesDtos= commentes.Select(s=>s.ToCommentDto()).ToList();  
             return Ok(commentesDtos);
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         [ProducesResponseType(200,Type = typeof(CommentDto))]
         public async Task <IActionResult> GetCommentById(int id)
         {
@@ -40,7 +40,7 @@ namespace backend.Controllers
 
             return Ok(comment.ToCommentDto());
         }
-        [HttpPost("{stockId}")]
+        [HttpPost("{stockId:int}")]
         public async Task<IActionResult> Create(int stockId,[FromBody] CreateCommentDto commentDto)
         {
             if(!_stockRepository.IsStockExist(stockId)) return BadRequest("stock doesn't exist");
@@ -54,7 +54,7 @@ namespace backend.Controllers
             return CreatedAtAction(nameof(GetCommentById), new { id = commentModel.Id }, commentModel.ToCommentDto());
             
         }
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id,[FromBody] UpdateCommentDto commentDto)
         {
             if(!ModelState.IsValid) return BadRequest(ModelState);
@@ -65,7 +65,7 @@ namespace backend.Controllers
             return Ok(commentModel.ToCommentDto());
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute]int id)
         {
             var commentModel = await _commentRepository.DeleteAsync(id);

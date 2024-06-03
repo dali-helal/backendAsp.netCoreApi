@@ -32,7 +32,7 @@ namespace backend.Controllers
             return Ok(stockDto);
         }
 
-        [HttpGet("{stockId}")]
+        [HttpGet("{stockId:int}")]
         [ProducesResponseType(200, Type = typeof(StockDto))]
         public async Task<IActionResult> GetStockById(int stockId)
         {
@@ -81,7 +81,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             if(!ModelState.IsValid) return BadRequest(ModelState);
