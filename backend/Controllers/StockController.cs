@@ -3,12 +3,13 @@ using backend.Helpers;
 using backend.Interfaces;
 using backend.Mapper;
 using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class StockController:ControllerBase
     {  
         private readonly IStockRepository _stockRepository;
@@ -18,6 +19,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(200, Type = typeof(ICollection<StockDto>))]
         public async Task<IActionResult> GetStocks([FromQuery] QueryObject queryObejct)
         {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240604194858_changeAttributes")]
+    partial class changeAttributes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ec5729f6-64c1-4c4a-8f72-65d0e36a2c1d",
+                            Id = "db60a7f7-7a3a-4bf2-a5c5-b16594bddb5e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "b0de445a-6750-47fc-b85b-845fa2b30551",
+                            Id = "398018b5-ca2a-4316-a464-a09f884514f8",
                             Name = "User",
                             NormalizedName = "USER"
                         });
