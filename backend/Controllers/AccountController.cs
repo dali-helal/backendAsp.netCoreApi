@@ -1,4 +1,5 @@
 ﻿using backend.Dtos.Account;
+using backend.Dtos.Email;
 using backend.Interfaces;
 using backend.Models;
 using backend.Services;
@@ -15,11 +16,15 @@ namespace backend.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly ITokenService _tokenService;
         private readonly SignInManager<AppUser> _signinManager;
-        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager)
+        private readonly IEmailSender _emailSender;
+        public AccountController( UserManager<AppUser> userManager,
+            ITokenService tokenService,
+            SignInManager<AppUser> signInManager,IEmailSender emailSender)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _signinManager = signInManager;
+            _emailSender = emailSender;
         }
 
         [HttpPost("login")]
@@ -71,14 +76,23 @@ namespace backend.Controllers
                     var roleResult = await _userManager.AddToRoleAsync(appUser, "User");
                     if (roleResult.Succeeded)
                     {
+                        var emailModel = new SendEmailDto
+                        {
+                            To = "dalihelal6@gmail.com",
+                            Subject = "Test Email",
+                            Body = "This is a test email."
+                        };
+
+                        await _emailSender.SendEmailAsync(emailModel);
+
                         return Ok(
                             new NewUserDto
                             {
                                 UserName = appUser.UserName,
                                 Email = appUser.Email,
-                                Token = _tokenService.CreateToken(appUser),
                                 LastName= appUser.LastName,
                                 Job= appUser.Job,
+                                Token = _tokenService.CreateToken(appUser),
                             }
                         );
                     }

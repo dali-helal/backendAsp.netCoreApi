@@ -1,4 +1,5 @@
 using backend.Data;
+using backend.Dtos.Email;
 using backend.Interfaces;
 using backend.Models;
 using backend.Repository;
@@ -90,7 +91,8 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IStockRepository, StockRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
